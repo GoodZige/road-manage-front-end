@@ -35,19 +35,17 @@ export default {
       console.log(newValue)
       this.chartData = newValue
       console.log('chartData', newValue)
-      // const xData = (function() {
-      //   const data = []
-      //   for (let i = 1; i < 31; i++) {
-      //     data.push(i)
-      //   }
-      //   return data
-      // }())
-      const xData = newValue.map(x => { return x.date })
-      console.log('????')
+      const xData = (function() {
+        const data = []
+        for (let i = 1; i < 24; i++) {
+          data.push(i)
+        }
+        return data
+      }())
       this.chart.setOption({
         backgroundColor: 'rgb(159, 228, 227)',
         title: {
-          text: '该月车流量统计',
+          text: '近24小时车辆数据',
           x: '20',
           top: '20',
           textStyle: {
@@ -83,9 +81,15 @@ export default {
           textStyle: {
             color: '#90979c'
           },
-          data: ['车流量'],
+          data: ['平均速度', '进出车辆数目', '微小车辆数量', '小车数量', '中车数量', '大车数量', '超大车数量'],
           selected: {
-            '车流量': true
+            '平均速度': true,
+            '进出车辆数目': false,
+            '微小车辆数量': false,
+            '小车数量': false,
+            '中车数量': false,
+            '大车数量': false,
+            '超大车数量': false
           }
         },
         calculable: true,
@@ -150,10 +154,16 @@ export default {
             color: '#fff' },
           borderColor: '#90979c'
 
+        }, {
+          type: 'inside',
+          show: true,
+          height: 15,
+          start: 1,
+          end: 35
         }],
         series: [{
-          name: '车流量',
-          type: 'bar',
+          name: '平均速度',
+          type: 'line',
           stack: 'total',
           barMaxWidth: 35,
           barGap: '10%',
@@ -172,7 +182,145 @@ export default {
               }
             }
           },
+          data: newValue.map(x => { return x.AvgSpeed })
+        },
+        {
+          name: '进出车辆数目',
+          type: 'bar',
+          stack: 'total',
+          barMaxWidth: 35,
+          barGap: '10%',
+          itemStyle: {
+            normal: {
+              color: 'rgba(52, 213, 124, 1)',
+              label: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                position: 'insideTop',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
           data: newValue.map(x => { return x.Volume })
+        },
+        {
+          name: '微小车辆数量',
+          type: 'bar',
+          stack: 'total',
+          barMaxWidth: 35,
+          barGap: '10%',
+          itemStyle: {
+            normal: {
+              color: 'rgba(46, 199, 201,1)',
+              label: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                position: 'insideTop',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
+          data: newValue.map(x => { return x.Volume1 })
+        },
+        {
+          name: '小车数量',
+          type: 'bar',
+          stack: 'total',
+          barMaxWidth: 35,
+          barGap: '10%',
+          itemStyle: {
+            normal: {
+              color: 'rgba(182, 162, 222,1)',
+              label: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                position: 'insideTop',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
+          data: newValue.map(x => { return x.Volume2 })
+        },
+        {
+          name: '中车数量',
+          type: 'bar',
+          stack: 'total',
+          barMaxWidth: 35,
+          barGap: '10%',
+          itemStyle: {
+            normal: {
+              color: 'rgba(90, 177, 239,1)',
+              label: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                position: 'insideTop',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
+          data: newValue.map(x => { return x.Volume3 })
+        },
+        {
+          name: '大车数量',
+          type: 'bar',
+          stack: 'total',
+          barMaxWidth: 35,
+          barGap: '10%',
+          itemStyle: {
+            normal: {
+              color: 'rgba(255, 185, 128,1)',
+              label: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                position: 'insideTop',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
+          data: newValue.map(x => { return x.Volume4 })
+        },
+        {
+          name: '超大车数量',
+          type: 'bar',
+          stack: 'total',
+          barMaxWidth: 35,
+          barGap: '10%',
+          itemStyle: {
+            normal: {
+              color: 'rgba(216, 122, 128,1)',
+              label: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                position: 'insideTop',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
+          data: newValue.map(x => { return x.Volume5 })
         }
         ]
       })

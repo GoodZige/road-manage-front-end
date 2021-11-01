@@ -3,9 +3,12 @@ const tokens = {
   admin: {
     token: 'admin-token'
   },
-  editor: {
-    token: 'editor-token'
-  }
+  // editor: {
+  //   token: 'editor-token'
+  // },
+  admin1: {
+    token: 'admin-token'
+  },
 }
 
 const users = {
@@ -23,17 +26,28 @@ const users = {
   }
 }
 
+const account = [
+  {
+    account: "admin",
+    password: "123321"
+  },
+  {
+    account: "test",
+    password: "123456",
+  }
+]
+
 module.exports = [
   // user login
   {
     url: '/vue-element-admin/user/login',
     type: 'post',
     response: config => {
-      const { username } = config.body
-      const token = tokens[username]
-
+      console.log(config.body)
+      const { username,password } = config.body
+      flag = account.find(item => item.account == username && item.password == password)
       // mock error
-      if (!token) {
+      if (!flag) {
         return {
           code: 60204,
           message: 'Account and password are incorrect.'
@@ -42,7 +56,7 @@ module.exports = [
 
       return {
         code: 20000,
-        data: token
+        data: {token: 'admin-token'}
       }
     }
   },

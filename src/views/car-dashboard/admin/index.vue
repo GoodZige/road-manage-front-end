@@ -26,7 +26,7 @@
             <AutoWidthOption v-model="allList.autoWidth" />
             <BookTypeOption v-model="allList.bookType" />
             <el-button :loading="allList.downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleSumDownload">
-              导出表格
+              导出2表格
             </el-button>
           </div>
           <el-table v-loading="allList.listLoading" :data="allList.list" element-loading-text="Loading..." border fit highlight-current-row>
@@ -479,7 +479,10 @@ export default {
         const tHeader = ['路线', '平均车速', '进出车辆数目', '微小车辆数量', '小车数量', '中车数量', '大车数量', '超大车数量']
         const filterVal = ['CrossName', 'AvgSpeed', 'Volume', 'Volume1', 'Volume2', 'Volume3', 'Volume4', 'Volume5']
         const list = this.allList.list
+        console.log('list')
+        console.log(list)
         const data = this.formatJson(filterVal, list)
+        console.log(data)
         excel.export_json_to_excel({
           header: tHeader,
           data,

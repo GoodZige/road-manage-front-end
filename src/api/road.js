@@ -21,7 +21,7 @@ export function fetchAddress() {
     method: 'get'
   })
 }
-// 获取总量统计
+// 获取总量统计  query
 export function fetchSumVolume(query) {
   return request({
     url: '/getTrafficVolume',
@@ -33,6 +33,22 @@ export function fetchSumVolume(query) {
 export function fetchMonthVolume(query) {
   return request({
     url: '/getMonthVolume',
+    method: 'get',
+    params: query
+  })
+}
+//海康总量 query
+export function fetchhaikangVolume(query) {
+  return request({
+    url: '/timeTotle',
+    method: 'get',
+    params: query
+  })
+}
+//获取图片
+export function fetchMonthpicture(query) {
+  return request({
+    url: '/timeData',
     method: 'get',
     params: query
   })

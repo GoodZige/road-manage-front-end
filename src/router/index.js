@@ -109,6 +109,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/duibi',
+    component: Layout,
+    redirect: '/duibi',
+    children: [
+      {
+        path: 'duibi',
+        component: () => import('@/views/duibi/index'),
+        name: 'duibi',
+        meta: { title: '车流量对比', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
     path: '/carDashboard',
     component: Layout,
     redirect: '/carDashboard',
@@ -144,7 +157,8 @@ export const constantRoutes = [
         meta: { title: '系统用户', icon: 'peoples', affix: true }
       }
     ]
-  }
+  },
+
   // {
   //   path: '/documentation',
   //   component: Layout,

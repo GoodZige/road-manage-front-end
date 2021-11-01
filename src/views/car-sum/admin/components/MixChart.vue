@@ -149,12 +149,6 @@ export default {
             color: '#fff' },
           borderColor: '#90979c'
 
-        }, {
-          type: 'inside',
-          show: true,
-          height: 15,
-          start: 1,
-          end: 35
         }],
         series: [{
           name: '车流量',

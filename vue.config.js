@@ -40,10 +40,18 @@ module.exports = {
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      '/message': {
-        target: `http://1l76233p13.iask.in`, // 修改后台接口地址
+      '/message/timeTotle': {
+        target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
         changeOrigin: true
-      }
+      },
+      '/message/timeData': {
+        target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
+        changeOrigin: true
+      },
+      '/message': {
+        target: `http://192.168.43.30:8099`, // 修改后台接口地址8099
+        changeOrigin: true
+      },
       // [process.env.VUE_APP_BASE_API]: {s
       //   target: `http://1.15.118.26:8023`, // 修改后台接口地址
       //   changeOrigin: true,
