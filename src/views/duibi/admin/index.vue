@@ -34,8 +34,7 @@
 
           <div class="chart-wrapper">
             <sum-panel :init-data="sumData" />
-
-            <haikangPanel :init-data="totalData" />
+            <!-- <haikangPanel :init-data="totalData" /> -->
           </div>
         </div>
       </el-col>
@@ -117,7 +116,7 @@
   </div>
 </template>
 
- 
+
 
     <!-- <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="12">
@@ -135,8 +134,7 @@
     <!-- <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;height:500px">
       <mix-chart :init-data="lastHoursData" height="500px" width="100%" :chart-data="lineChartData" />
     </el-row> -->
-  </div>
-</template>
+
 
 <script>
 import PanelGroup from "./components/PanelGroup";
@@ -209,6 +207,40 @@ Date.prototype.format = function (fmt) {
   return fmt;
 };
 
+const cross = [
+  { Volume: 45555, date: "1" },
+  { Volume: 33027, date: "2" },
+  { Volume: 84474, date: "3" },
+  { Volume: 29211, date: "4" },
+  { Volume: 27867, date: "5" },
+  { Volume: 36174, date: "6" },
+  { Volume: 28527, date: "7" },
+  { Volume: 26235, date: "8" },
+  { Volume: 66493, date: "9" },
+  { Volume: 58055, date: "10" },
+  { Volume: 68978, date: "11" },
+  { Volume: 59972, date: "12" },
+  { Volume: 52647, date: "13" },
+  { Volume: 79668, date: "14" },
+  { Volume: 58895, date: "15" },
+  { Volume: 64563, date: "16" },
+  { Volume: 56256, date: "17" },
+  { Volume: 87654, date: "18" },
+  { Volume: 68789, date: "19" },
+  { Volume: 0, date: "20" },
+  { Volume: 0, date: "21" },
+  { Volume: 0, date: "22" },
+  { Volume: 0, date: "23" },
+  { Volume: 0, date: "24" },
+  { Volume: 0, date: "25" },
+  { Volume: 0, date: "26" },
+  { Volume: 0, date: "27" },
+  { Volume: 0, date: "28" },
+  { Volume: 0, date: "29" },
+  { Volume: 0, date: "30" },
+  { Volume: 0, date: "31" },
+];
+
 export default {
   name: "DashboardAdmin",
   components: {
@@ -280,6 +312,39 @@ export default {
         autoWidth: true,
         bookType: "xlsx",
       },
+      monthData: [
+        { Volume: 45555, date: "1" },
+        { Volume: 33027, date: "2" },
+        { Volume: 84474, date: "3" },
+        { Volume: 29211, date: "4" },
+        { Volume: 27867, date: "5" },
+        { Volume: 36174, date: "6" },
+        { Volume: 28527, date: "7" },
+        { Volume: 26235, date: "8" },
+        { Volume: 66493, date: "9" },
+        { Volume: 58055, date: "10" },
+        { Volume: 68978, date: "11" },
+        { Volume: 59972, date: "12" },
+        { Volume: 52647, date: "13" },
+        { Volume: 79668, date: "14" },
+        { Volume: 58895, date: "15" },
+        { Volume: 64563, date: "16" },
+        { Volume: 56256, date: "17" },
+        { Volume: 87654, date: "18" },
+        { Volume: 68789, date: "19" },
+        { Volume: 0, date: "20" },
+        { Volume: 0, date: "21" },
+        { Volume: 0, date: "22" },
+        { Volume: 0, date: "23" },
+        { Volume: 0, date: "24" },
+        { Volume: 0, date: "25" },
+        { Volume: 0, date: "26" },
+        { Volume: 0, date: "27" },
+        { Volume: 0, date: "28" },
+        { Volume: 0, date: "29" },
+        { Volume: 0, date: "30" },
+        { Volume: 0, date: "31" },
+      ],
     };
   },
   computed: {
@@ -376,34 +441,12 @@ export default {
     if (myweekday < 10) {
       myweekday = "0" + myweekday;
     }
-    var strDay = myyear + "-" + mymonth + "-" + myweekday;
-    var query1 = {
-      LaneNo: `017`,
-      CrossId: `21091604`,
-      start: this.dates.value2[0].format("yyyy-MM-dd hh:mm:ss"),
-      end: this.dates.value2[1].format("yyyy-MM-dd hh:mm:ss"),
-      // hours: 2
-    };
-    var query2 = {
-      date: strDay,
-      LaneNo: `017`,
-      CrossId: `21091604`,
-      // hours: 2
-    };
-    fetchAnalysis(query1).then((response) => {
-      console.log(response);
-      this.allData = response.data;
-    });
-    fetchCountByHour(query2).then((response) => {
-      this.lastHoursData = response.data;
-      this.partList.list = response.data;
-    });
+
     const sumQuery = {
       start: this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss"),
       end: this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss"),
     };
     this.initSumData(sumQuery);
-    this.testHK();
 
     //挂载 图片地址
     console.log("图片");
@@ -411,9 +454,7 @@ export default {
 
     this.getPicture();
   },
-  created() {
-    this.fetchData();
-  },
+  created() {},
   methods: {
     updateImage(page = 1) {
       let temp = this.currenceData;
@@ -452,27 +493,6 @@ export default {
     handleSetLineChartData(type) {
       this.lineChartData = lineChartData[type];
     },
-    testHK() {
-      console.log(this.dates.sumDate[0].format("yyyy-MM-ddThh:mm:ss.S"));
-      const query = {
-        bigData: {
-          crossingIndexCode: "21091604",
-          groupBy: "passTime",
-          maxResults: "1000",
-          passTime:
-            this.dates.sumDate[0].format("yyyy-MM-ddThh:mm:ss.S") +
-            "," +
-            this.dates.sumDate[1].format("yyyy-MM-ddThh:mm:ss.S"),
-          statsType: "terms",
-          sort: "asc",
-          passTimeType: "day",
-          type: "vehiclepass",
-        },
-      };
-      fetchHKSum(query).then((response) => {
-        console.log(response);
-      });
-    },
 
     getPicture(query) {
       // const sumQuery = {
@@ -503,77 +523,202 @@ export default {
     },
     //总数对比请求
     initSumData(query) {
+      let actu_start = this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss");
+      let actu_end = this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss");
+
       let startDate = this.dates.sumDate[0].getDate();
       let endDate = this.dates.sumDate[1].getDate();
-      if (startDate <= 19 && endDate <= 19) {
+      let startyear = this.dates.sumDate[0].getFullYear();
+      let endyear = this.dates.sumDate[1].getFullYear();
+      let startmoth = this.dates.sumDate[0].getMonth();
+      let endmoth = this.dates.sumDate[1].getMonth();
+
+      let startTime = this.dates.sumDate[0].getTime();
+      let endTime = this.dates.sumDate[1].getTime();
+
+      const start = new Date("2021-10-1 00:00:00").getTime();
+      const end = new Date("2021-10-19 23:59:59").getTime();
+      
+      //开始结束都在10月1号到10月19号之内
+      if (
+        startyear == 2021 &&
+        endyear == 2021 &&
+        startmoth == 9 &&
+        endmoth == 9 &&
+        startDate <= 19 &&
+        endDate <= 19
+      ) {
+        //获取地磁静态数据
         let theseDateSum = 0;
-        console.log("进入请求");
+        console.log("进入静态");
         for (let i = startDate; i <= endDate; i++) {
           console.log("共显示天数：", i);
-          theseDateSum = theseDateSum + this.monthData[i - 1].Volume;
+          theseDateSum = theseDateSum + cross[i - 1].Volume;
         }
         console.log(theseDateSum);
         //前19天暂时设置这样
         this.sumData = theseDateSum;
-        this.totalData = theseDateSum;
-      } else {
-        console.log("是否进入");
-        var addDay = new Date("2021-10-01 00:00:00");
-        //获取开始结束时间
-        const sumQuery2 = {
-          startTime: this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss"),
-          endTime: this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss"),
-        };
-        //时间参数暂时不加
-        console.log("sumQuery", sumQuery);
-
+        //开始在10月1日之前  结束在10月19号之内
+      } else if (startTime < start && start < endTime && endTime < end) {
+        console.log("startDate22", startDate);
+        console.log("endDate", endDate);
+        //获取部分静态数据
+        let theseDateSum = 0;
+        for (let i = 1; i <= endDate; i++) {
+          console.log("共显示天数：", i);
+          theseDateSum = theseDateSum + cross[i - 1].Volume;
+        }
         //地磁总量请求 有参数sumQuery暂时不加
+        let endDay = new Date("2021-9-30 23:59:59").format("yyyy-MM-dd hh:mm:ss");
         const sumQuery = {
-          start: this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss"),
-          end: this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss"),
+          start: actu_start,
+          end: endDay,
         };
         //地磁总量
         fetchSumVolume(sumQuery).then(
           (response) => {
             console.log("地磁数据", response);
-            this.sumData = response.data[0];
+            if (response.data.length == 0) {
+              this.sumData = theseDateSum;
+            } else {
+              this.sumData = theseDateSum + response.data[0]['sum(Volume)'];
+            }
           },
           (err) => {
             console.log(err);
           }
         );
 
-        //海康总量请求
-        fetchhaikangVolume(sumQuery2).then(
+        //开始在10月1号到10月19号之内，结束在10月19号之后
+      } else if (start <= startTime && startTime <= end && end < endTime) {
+        console.log("是否进入hou");
+        let theseDateSum = 0;
+        for (let i = startDate; i <= 19; i++) {
+          console.log("共显示天数：", i);
+          theseDateSum = theseDateSum + cross[i - 1].Volume;
+        }
+        //地磁总量
+        let startDay = new Date("2021-10-20 00:00:00").format("yyyy-MM-dd hh:mm:ss");
+        const sumQuery = {
+          start: startDay,
+          end: actu_end,
+        };
+        fetchSumVolume(sumQuery).then(
           (response) => {
-            console.log("海康对比参数：", response.data[0]["count"]);
-
-            this.totalData = { Volume: response.data[0]["count"], AvgSpeed: 0 };
-
-            // console.log("pictureum：", response.data);
-            // if (response.data.length > 0) {
-            //   if (response.data[0] != null) {
-            //     // if (addDay.getTime() > this.dates.sumDate[0]) {
-            //     //   //获取数据
-            //     //   this.sumData = response.data[0]["sum(Volume)"] + 30000;
-            //     this.tableData.address = [...response.data];
-
-            //     // } else {
-            //     //   this.sumData = response.data[0]["sum(Volume)"];
-
-            //     // }
-            //   } else {
-            //     this.sumData = 0;
-            //   }
-            // } else {
-            //   this.sumData = 0;
-            // }
+            console.log("地磁数据", response);
+            if (response.data.length == 0) {
+              this.sumData = theseDateSum;
+            } else {
+              this.sumData = theseDateSum + response.data[0]['sum(Volume)'];
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        //数据段包括静态数据 10月1日到10月19日
+      } else if (startTime < start && end < endTime) {
+        console.log("包括静态数据");
+        let theseDateSum = 0;
+        for (let i = 1; i <= 19; i++) {
+          console.log("共显示天数：", i);
+          theseDateSum = theseDateSum + cross[i - 1].Volume;
+        }
+        let startDay = new Date("2021-10-20 00:00:00").format("yyyy-MM-dd hh:mm:ss");
+        let endDay = new Date("2021-9-30 23:59:59").format("yyyy-MM-dd hh:mm:ss");
+        const sumQuery1 = {
+          start: startDay,
+          end: actu_end,
+        };
+        const sumQuery2 = {
+          start: actu_start,
+          end: endDay,
+        };
+        fetchSumVolume(sumQuery1).then(
+          (response) => {
+            console.log("地磁数据", response);
+            if (response.data.length == 0) {
+              // this.sumData = theseDateSum;
+            } else {
+              theseDateSum = theseDateSum + response.data[0]['sum(Volume)'];
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        fetchSumVolume(sumQuery2).then(
+          (response) => {
+            console.log("地磁数据", response);
+            if (response.data.length == 0) {
+              // this.sumData = theseDateSum;
+            } else {
+              theseDateSum = theseDateSum + response.data[0]['sum(Volume)'];
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        this.sumData = theseDateSum
+      }
+      //时间段不包含静态数据
+      else {
+        console.log("sumQuery22");
+        //地磁总量请求 有参数sumQuery暂时不加
+        const sumQuery = {
+          start: actu_start,
+          end: actu_end,
+        };
+        fetchSumVolume(sumQuery).then(
+          (response) => {
+            console.log("地磁数据", response);
+            if (response.data.length == 0) {
+              // this.sumData = theseDateSum;
+            } else {
+              this.sumData = response.data[0]['sum(Volume)'];
+              console.log();
+            }
           },
           (err) => {
             console.log(err);
           }
         );
       }
+      const sumQuery2 = {
+        startTime: this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss"),
+        endTime: this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss"),
+      };
+      //海康总量请求
+      fetchhaikangVolume(sumQuery2).then(
+        (response) => {
+          console.log("海康对比参数：", response.data[0]["count"]);
+
+          this.totalData = { Volume: response.data[0]["count"], AvgSpeed: 0 };
+
+          // console.log("pictureum：", response.data);
+          // if (response.data.length > 0) {
+          //   if (response.data[0] != null) {
+          //     // if (addDay.getTime() > this.dates.sumDate[0]) {
+          //     //   //获取数据
+          //     //   this.sumData = response.data[0]["sum(Volume)"] + 30000;
+          //     this.tableData.address = [...response.data];
+
+          //     // } else {
+          //     //   this.sumData = response.data[0]["sum(Volume)"];
+
+          //     // }
+          //   } else {
+          //     this.sumData = 0;
+          //   }
+          // } else {
+          //   this.sumData = 0;
+          // }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     },
     changeSumData() {
       // const sumQuery = {
@@ -585,74 +730,7 @@ export default {
       //无参数
       this.initSumData();
     },
-    changeData() {
-      const that = this;
-      const query3 = {
-        CrossId: that.addressValue,
-        LaneNo: that.roadValue,
-        start: that.dates.value2[0].format("yyyy-MM-dd hh:mm:ss"),
-        end: that.dates.value2[1].format("yyyy-MM-dd hh:mm:ss"),
-      };
 
-      // query4
-      var today = new Date();
-      // today.setDate(today.getDate() - 6)
-      var myyear = today.getFullYear();
-      var mymonth = today.getMonth() + 1;
-      var myweekday = today.getDate();
-      if (mymonth < 10) {
-        mymonth = "0" + mymonth;
-      }
-      if (myweekday < 10) {
-        myweekday = "0" + myweekday;
-      }
-      var strDay = myyear + "-" + mymonth + "-" + myweekday;
-      const query4 = {
-        date: strDay,
-        LaneNo: that.roadValue,
-        CrossId: that.addressValue,
-      };
-
-      fetchAnalysis(query3).then((response) => {
-        this.allData = response.data;
-      });
-      fetchCountByHour(query4).then((response) => {
-        this.lastHoursData = response.data;
-        this.partList.list = response.data;
-      });
-    },
-    fetchData() {
-      this.listLoading = true;
-      var today = new Date();
-      var myyear = today.getFullYear();
-      var mymonth = today.getMonth() + 1;
-      var myweekday = today.getDate();
-      if (mymonth < 10) {
-        mymonth = "0" + mymonth;
-      }
-      if (myweekday < 10) {
-        myweekday = "0" + myweekday;
-      }
-      var strDay = myyear + "-" + mymonth + "-" + myweekday;
-      var query2 = {
-        date: strDay,
-        LaneNo: this.value,
-        // hours: 2
-      };
-      fetchCountByHour(query2).then((response) => {
-        this.partList.list = response.data;
-        this.partList.listLoading = false;
-      });
-
-      // 获取地点及车道列表
-      // http://localhost:8099/message/getCrossLano
-      fetchAddress().then((response) => {
-        console.log("地点车道信息：", response.data);
-        this.addressOptions = response.data.map((x) => {
-          return { value: x.CrossId, label: x.CrossName, roadOptions: x.Lano };
-        });
-      });
-    },
     handleSumDownload() {
       this.allList.downloadLoading = true;
       import("@/vendor/Export2Excel").then((excel) => {

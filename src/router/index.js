@@ -83,18 +83,18 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
-  {
-    path: '/video',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: '视频监控', icon: 'eye-open', affix: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/video',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/documentation/index'),
+  //       name: 'Documentation',
+  //       meta: { title: '视频监控', icon: 'eye-open', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/',
     component: Layout,
@@ -122,42 +122,42 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/carDashboard',
+    path: '/alarm',
     component: Layout,
-    redirect: '/carDashboard',
+    redirect: '/alarm',
     children: [
       {
-        path: 'carDashboard',
-        component: () => import('@/views/car-dashboard/index'),
-        name: 'CarDashboard',
-        meta: { title: '区间统计', icon: 'dashboard', affix: true }
+        path: 'alarm',
+        component: () => import('@/views/alarm/index'),
+        name: 'Alarm',
+        meta: { title: '报警信息', icon: 'dashboard', affix: true }
       }
     ]
   },
-  {
-    path: '/manage',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: '基础管理', icon: 'form', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/user',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: '系统用户', icon: 'peoples', affix: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/manage',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/documentation/index'),
+  //       name: 'Documentation',
+  //       meta: { title: '基础管理', icon: 'form', affix: true }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/user',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       component: () => import('@/views/documentation/index'),
+  //       name: 'Documentation',
+  //       meta: { title: '系统用户', icon: 'peoples', affix: true }
+  //     }
+  //   ]
+  // },
 
   // {
   //   path: '/documentation',

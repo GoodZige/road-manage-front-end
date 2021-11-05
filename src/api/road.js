@@ -14,6 +14,29 @@ export function fetchCountByHour(query) {
     params: query
   })
 }
+
+
+// 按照新接口获取车道的月数据
+export function getMonthVolume(query) {
+  return request({
+    url: '/countMonthVolume',
+    method: 'get',
+    params: query
+  })
+}
+//按照接口获取车道的日数据
+export function getDayVolume(query) {
+  return request({
+    url: '/countByCrossID',
+    method: 'get',
+    params: query
+  })
+}
+
+
+
+
+
 // 获取地点及车道列表
 export function fetchAddress() {
   return request({
@@ -59,6 +82,14 @@ export function fetchHKSum(query) {
     // 349w081g01.zicp.vip:50770
     url: '/api/aiapplication/v3/vehicle/queryStatisticsVehiclesByGroupWithPage',
     method: 'post',
+    params: query
+  })
+}
+//报警信息
+export function fetchAlarm(query) {
+  return request({
+    url: '/getAlarm',
+    method: 'get',
     params: query
   })
 }

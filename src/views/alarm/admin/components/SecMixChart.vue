@@ -26,15 +26,15 @@ export default {
       default: '200px'
     },
     initData: {
-      type: Object,
+      type: Array,
       default: null
     }
   },
   watch: {
     initData: function(newValue) {
       console.log(newValue)
-      this.chartData = newValue.data
-      console.log('chartData', this.chartData)
+      this.chartData = newValue
+      console.log('chartData', newValue)
       // const xData = (function() {
       //   const data = []
       //   for (let i = 1; i < 31; i++) {
@@ -42,16 +42,10 @@ export default {
       //   }
       //   return data
       // }())
-      const xData = this.chartData.map(x => { return x.date })
-      let crossNameList = newValue.crossNameList
-      let legendData = []
-      legendData.push("各车道总量")
-      crossNameList.forEach(element => {
-        legendData.push(element)
-      });
-      this.chart.clear();
+      const xData = newValue.map(x => { return x.date })
+      console.log('????')
       this.chart.setOption({
-        backgroundColor: 'rgb(159, 228, 227)',
+        backgroundColor: '#344b58',
         title: {
           text: '该月车流量统计',
           x: '20',
@@ -89,19 +83,10 @@ export default {
           textStyle: {
             color: '#90979c'
           },
-          data: legendData,
-          selected: (()=>{
-            let obj = {
-              '各车道总量': true
-            }
-            crossNameList.forEach(element => {
-              obj[element] = false
-            });
-            return obj
-          })()
-          // selected: {
-          //   '各车道总量': true
-          // }
+          data: ['车流量'],
+          selected: {
+            '车流量': true
+          }
         },
         calculable: true,
         xAxis: [{
@@ -166,96 +151,30 @@ export default {
           borderColor: '#90979c'
 
         }],
-        series: (()=>{
-          let seriesList = []
-          crossNameList.forEach(crossName => {
-            function randomColor() {
-              var col = "#";
-              for (var i = 0; i < 6; i++) col+=parseInt(Math.random() * 16).toString(16);
-              return col;
-            }
-            let thisColor = randomColor()
-            let ss = {
-              name: crossName,
-              type: 'line',
-              barMaxWidth: 35,
-              barGap: '10%',
-              itemStyle: {
-                normal: {
-                  color: thisColor,
-                  label: {
-                    show: true,
-                    textStyle: {
-                      color: '#fff'
-                    },
-                    position: 'insideTop',
-                    formatter(p) {
-                      return p.value > 0 ? p.value : ''
-                    }
-                  }
-                }
-              },
-              data: this.chartData.map(x => { return x[crossName] })
-            }
-            seriesList.push(ss)
-          });
-          let sumSeries = {
-            name: "各车道总量",
-            type: 'bar',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: 'rgba(255,144,128,1)',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
+        series: [{
+          name: '车流量',
+          type: 'bar',
+          stack: 'total',
+          barMaxWidth: 35,
+          barGap: '10%',
+          itemStyle: {
+            normal: {
+              color: 'rgba(255,144,128,1)',
+              label: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                position: 'insideTop',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
                 }
               }
-            },
-            data: this.chartData.map(x => {
-              let sum = 0
-              crossNameList.forEach(element => {
-                if (element in x) {
-                  sum += x[element]
-                }
-              });
-              return sum
-            })
-          }
-          seriesList.push(sumSeries)
-          return seriesList
-        })(),
-        // series: [{
-        //   name: '车流量',
-        //   type: 'bar',
-        //   stack: 'total',
-        //   barMaxWidth: 35,
-        //   barGap: '10%',
-        //   itemStyle: {
-        //     normal: {
-        //       color: 'rgba(255,144,128,1)',
-        //       label: {
-        //         show: true,
-        //         textStyle: {
-        //           color: '#fff'
-        //         },
-        //         position: 'insideTop',
-        //         formatter(p) {
-        //           return p.value > 0 ? p.value : ''
-        //         }
-        //       }
-        //     }
-        //   },
-        //   data: this.chartData.map(x => { return x.Volume })
-        // }
-        // ]
+            }
+          },
+          data: newValue.map(x => { return x.Volume })
+        }
+        ]
       })
     }
   },
