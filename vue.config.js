@@ -64,6 +64,13 @@ module.exports = {
         target: `http://172.24.95.73:8100`, // 修改后台接口地址8099
         changeOrigin: true
       },
+      // [process.env.VUE_APP_BASE_API]: {s
+      //   target: `http://1.15.118.26:8023`, // 修改后台接口地址
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     ['^' + process.env.VUE_APP_BASE_API]: ''
+      //   }
+      // }
       
       // [process.env.VUE_APP_BASE_API]: {s
       //   target: `http://1.15.118.26:8023`, // 修改后台接口地址
