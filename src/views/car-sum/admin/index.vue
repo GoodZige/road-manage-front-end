@@ -318,28 +318,28 @@ export default {
           LaneNoName: "全部车道",
         },
         {
-          LaneNo: "21091601",
-          LaneNoName: "嘉陵到土主",
+          LaneNo: "21091604",
+          LaneNoName: "ZK15+940",
         },
         {
-          LaneNo: "21091603",
-          LaneNoName: "土主到嘉陵",
+          LaneNo: "21091602",
+          LaneNoName: "YK15+460",
         },
         {
-          LaneNo: "21092401",
-          LaneNoName: "土主到大学城",
+          LaneNo: "21091605",
+          LaneNoName: "ZK12+900",
         },
         {
-          LaneNo: "21092407",
-          LaneNoName: "大学城到土主",
+          LaneNo: "21092405",
+          LaneNoName: "YK12+900",
         },
         {
-          LaneNo: "21092404",
-          LaneNoName: "G93到科学城",
+          LaneNo: "21092402",
+          LaneNoName: "ZK2+900",
         },
         {
-          LaneNo: "21092403",
-          LaneNoName: "科学城到G93",
+          LaneNo: "21092406",
+          LaneNoName: "YK2+900",
         },
       ],
       addressValue: "null",
@@ -720,7 +720,7 @@ export default {
       }
     },
     changeMonthData() {
-      this.listLoading = true
+      this.allList.listLoading = true
       let month = this.dates.month.format("yyyy-MM");
       const query = {
         time: month,
@@ -782,7 +782,9 @@ export default {
         this.allList.listLoading = false
         this.monthData = {
           data: excelData,
-          crossNameList: this.crossNameList
+          crossNameList: this.crossNameList,
+          year: this.dates.month.getFullYear(),
+          month: this.dates.month.getMonth()+1
         }
         // originData.forEach(element => {
         //   for (const key in element) {
