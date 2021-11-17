@@ -22,6 +22,10 @@
                 :default-time="['00:00:00', '23:59:59']"
               />
             </el-col>
+
+            
+
+
             <el-col :xs="24" :sm="24" :lg="6" class="btn-col">
               <a
                 class="pan-btn blue-btn"
@@ -43,7 +47,7 @@
     <el-row :gutter="32">
       <el-col :xs="24" :sm="24" :lg="24">
         <div class="input-wrapper">
-          <p class="choose-title">图片地址</p>
+          <p class="choose-title">按车牌号查询</p>
 
           <el-row>
             <el-col
@@ -62,12 +66,28 @@
                 :default-time="['00:00:00', '23:59:59']"
               />
             </el-col>
+
+            <el-col :xs="24" :sm="24" :lg="6" class="btn-col">
+              <el-input style="margin-left:20px" placeholder="例：渝AD299L" v-model="carId">
+              </el-input>
+              <!-- <el-select v-model="roadValue" placeholder="请选择车道号">
+                <el-option
+                  v-for="item in roadOptions"
+                  :key="item.LaneNo"
+                  :label="item.LaneNoName"
+                  :value="item.LaneNo"
+                />
+              </el-select> -->
+            </el-col>
+
+
+
             <el-col :xs="24" :sm="24" :lg="6" class="btn-col">
               <a
                 class="pan-btn blue-btn"
                 style="line-height: 12px"
                 @click="getPicture"
-                >获取图片</a
+                >查询</a
               >
             </el-col>
           </el-row>
@@ -87,17 +107,25 @@
           <template>
             <!-- data -->
             <el-table :data="currentData" border style="width: 100%">
-              <el-table-column fixed prop="date" label="id号" width="150">
+
+              <el-table-column fixed prop="plateColorName" label="颜色" width="150">
               </el-table-column>
-              <el-table-column prop="address" label="地址" width="300">
+
+              <el-table-column prop="createTime" label="时间" width="300">
               </el-table-column>
+
+              <el-table-column prop="vehicleTypeName" label="型号" width="300">
+              </el-table-column>
+
               <el-table-column label="操作" width="100">
                 <template slot-scope="scope">
-                  <el-link type="info" :href="scope.row.address" target="_blank"
+                  <el-link type="info" :href="scope.row.targetPicUrl" target="_blank"
                     >查看</el-link
                   >
                 </template>
               </el-table-column>
+
+
             </el-table>
 
             <!-- pagetotal数组类型共多少页 -->
@@ -108,7 +136,7 @@
               :page-sizes="[10]"
               :page-size="pagesize"
               layout="total, sizes, prev, pager, next, jumper"
-              :total="tableData.length"
+              :total="totle"
             >
             </el-pagination>
           </template></div></el-col
@@ -256,10 +284,14 @@ export default {
   },
   data() {
     return {
+      carId: null,
+      totle:0,
       sortedhao: 0,
       totalData: {},
       //当前页数据
-      currentData: [],
+      currentData: [
+        { color:"蓝色",time:'2021-10-29T16：02：31', carname:'suv'}
+      ],
       //初始页
       currentPage: 1,
       //每页数据数量
@@ -273,6 +305,10 @@ export default {
       lastHoursData: [],
       addressOptions: [],
       roadOptions: [
+        {
+          LaneNo: null,
+          LaneNoName: "全部车道",
+        },
         {
           LaneNo: "017",
           LaneNoName: "车道1",
@@ -374,6 +410,8 @@ export default {
 
       console.log("arr", arr);
       return arr;
+
+
     },
 
     // pagetotal(){
@@ -460,25 +498,63 @@ export default {
       let temp = this.currenceData;
       console.log("temp", temp);
       this.currentData = temp[page - 1];
-      console.log("currentData", this.currentData);
+      this.currentData.map(item =>{
+        item.createTime = (new Date(item.createTime)).format("yyyy-MM-dd hh:mm:ss")
+      })
     },
 
     // 初始页currentPage、初始每页数据数pagesize和数据data
     handleSizeChange: function (size) {
       this.pagesize = size;
-      console.log(this.pagesize); //每页下拉显示数据
       let temp = this.currenceData;
       console.log("temp", temp);
       this.currentData = temp[this.pagesize - 1];
-      console.log("currentData", this.currentData);
+      this.currentData.map(item =>{
+        item.createTime = (new Date(item.createTime)).format("yyyy-MM-dd hh:mm:ss")
+      })
+      console.log("改变页面");
     },
+
+
     handleCurrentChange: function (currentPage) {
-      this.currentPage = currentPage;
-      console.log("点击页面" + this.currentPage); //点击第几页
-      let temp = this.currenceData;
-      console.log("temp", temp);
-      this.currentData = temp[this.currentPage - 1];
-      console.log("currentData", this.currentData);
+
+      // this.currentPage = currentPage;
+      // console.log("点击页面" + this.currentPage); //点击第几页
+      // let temp = this.currenceData;
+      // console.log("temp", temp);
+      // this.currentData = temp[this.currentPage - 1];
+      // console.log("currentData", this.currentData);
+      {
+      // const sumQuery = {
+      //   startTime: this.dates.beforeDate[0].format("yyyy-MM-dd hh:mm:ss"),
+      //   endTime: this.dates.beforeDate[1].format("yyyy-MM-dd hh:mm:ss"),
+      // };
+      const sumQuery = {
+       // startTime: this.dates.beforeDate[0].format("yyyy-MM-dd hh:mm:ss"),
+       // endTime: this.dates.beforeDate[1].format("yyyy-MM-dd hh:mm:ss"),
+        startTime:'2021-10-29+18:00:06',
+        endTime:'2021-10-30+18:00:06',
+        pageSize:10,
+        pageNum: currentPage,
+        plateNo: null
+
+      };
+      fetchMonthpicture(sumQuery).then(
+        (response) => {
+          console.log(response)
+          this.currentData = response.data
+          this.currentData.map(item =>{
+            item.createTime = (new Date(item.createTime)).format("yyyy-MM-dd hh:mm:ss")
+          })
+          console.log(response.totle)
+          this.totle = response.totle
+        },
+        (err) => {
+          console.log("zzz", err);
+        }
+      );
+    }
+
     },
     handleUserList() {
       this.$http.get("http://localhost:3000/userList").then((res) => {
@@ -499,22 +575,36 @@ export default {
       //   startTime: this.dates.beforeDate[0].format("yyyy-MM-dd hh:mm:ss"),
       //   endTime: this.dates.beforeDate[1].format("yyyy-MM-dd hh:mm:ss"),
       // };
+
       const sumQuery = {
-        startTime: "2021-10-29 15:15:54",
-        endTime: "2021-10-29 15:25:54",
-      };
+        startTime: this.dates.beforeDate[0].format("yyyy-MM-dd hh:mm:ss"),
+        endTime: this.dates.beforeDate[1].format("yyyy-MM-dd hh:mm:ss"),
+        // startTime:'2021-10-29+18:00:06',
+        // endTime:'2021-10-30+18:00:06',
+        pageSize:10,
+        pageNum:1,
+        plateNo: this.carId
+      }
+
       fetchMonthpicture(sumQuery).then(
         (response) => {
-          console.log("图片数据:", response.data[0]["targetPicUrl"]);
-          let len = response.data.length;
-          var arr = [];
-          for (let i = 0; i < len; i++) {
-            let test = i + 1;
-            arr.push({ date: test, address: response.data[i]["targetPicUrl"] });
-          }
-          console.log(arr);
-          this.tableData = arr;
-          this.updateImage();
+          console.log(response)
+          this.currentData = response.data
+          this.currentData.map(item =>{
+            item.createTime = (new Date(item.createTime)).format("yyyy-MM-dd hh:mm:ss")
+          })
+          // console.log("图片数据:", response.data[0]["targetPicUrl"]);
+          // let len = response.data.length;
+          // var arr = [];
+          // for (let i = 0; i < len; i++) {
+          //   let test = i + 1;
+          //   arr.push({ date: test, address: response.data[i]["targetPicUrl"] });
+          // }
+          // this.tableData = arr;
+          // this.updateImage();
+          console.log(response.totle)
+          this.totle = response.totle
+
         },
         (err) => {
           console.log("zzz", err);
@@ -685,6 +775,8 @@ export default {
           }
         );
       }
+
+
       const sumQuery2 = {
         startTime: this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss"),
         endTime: this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss"),
@@ -696,24 +788,6 @@ export default {
 
           this.totalData = { Volume: response.data[0]["count"], AvgSpeed: 0 };
 
-          // console.log("pictureum：", response.data);
-          // if (response.data.length > 0) {
-          //   if (response.data[0] != null) {
-          //     // if (addDay.getTime() > this.dates.sumDate[0]) {
-          //     //   //获取数据
-          //     //   this.sumData = response.data[0]["sum(Volume)"] + 30000;
-          //     this.tableData.address = [...response.data];
-
-          //     // } else {
-          //     //   this.sumData = response.data[0]["sum(Volume)"];
-
-          //     // }
-          //   } else {
-          //     this.sumData = 0;
-          //   }
-          // } else {
-          //   this.sumData = 0;
-          // }
         },
         (err) => {
           console.log(err);

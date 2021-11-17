@@ -95,16 +95,29 @@ export const constantRoutes = [
   //     }
   //   ]
   // },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/carSum',
+  //   children: [
+  //     {
+  //       path: 'carSum',
+  //       component: () => import('@/views/car-sum/index'),
+  //       name: 'CarSum',
+  //       meta: { title: '车流量统计', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/',
     component: Layout,
-    redirect: '/carSum',
+    redirect: '/carSumMix',
     children: [
       {
-        path: 'carSum',
-        component: () => import('@/views/car-sum/index'),
-        name: 'CarSum',
-        meta: { title: '车流量统计', icon: 'dashboard', affix: true }
+        path: 'carSumMix',
+        component: () => import('@/views/car-sum-mix/index'),
+        name: 'CarSumMix',
+        meta: { title: '车流量混合统计', icon: 'dashboard', affix: true }
       }
     ]
   },
