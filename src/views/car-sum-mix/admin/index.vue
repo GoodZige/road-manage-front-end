@@ -636,7 +636,7 @@ export default {
             if (response.data.length == 0) {
               this.sumData = theseDateSum;
             } else {
-              this.sumData = theseDateSum + sum;
+              theseDateSum = theseDateSum + sum;
             }
           },
           (err) => {
@@ -653,7 +653,7 @@ export default {
             if (response.data.length == 0) {
               this.sumData = theseDateSum;
             } else {
-              this.sumData = theseDateSum + sum;
+              theseDateSum = theseDateSum + sum;
             }
           },
           (err) => {

@@ -37,8 +37,8 @@
           </el-row>
 
           <div class="chart-wrapper">
-            <sum-panel :init-data="sumData" />
-            <!-- <haikangPanel :init-data="totalData" /> -->
+            <sum-panel :init-data="diciSumData" />
+            <haikangPanel :init-data="sumData" />
           </div>
         </div>
       </el-col>
@@ -184,7 +184,9 @@ import {
   fetchSumVolume,
   fetchHKSum,
   fetchMonthpicture,
-  fetchhaikangVolume,
+  fetchDiCiVolume,
+  fetchHKVolume,
+  getDayVolume
 } from "@/api/road";
 import { date } from "jszip/lib/defaults";
 
@@ -302,6 +304,7 @@ export default {
       lineChartData: lineChartData.newVisitis,
       allData: {},
       sumData: {},
+      diciSumData: {},
       lastHoursData: [],
       addressOptions: [],
       roadOptions: [
@@ -664,14 +667,34 @@ export default {
           start: actu_start,
           end: endDay,
         };
-        //地磁总量
-        fetchSumVolume(sumQuery).then(
+        fetchDiCiVolume(sumQuery).then(
           (response) => {
             console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
+            if (response.data.length == 0) {
+              this.diciSumData = theseDateSum;
+            } else {
+              this.diciSumData = theseDateSum + sum;
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        fetchHKVolume(sumQuery).then(
+          (response) => {
+            console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
             if (response.data.length == 0) {
               this.sumData = theseDateSum;
             } else {
-              this.sumData = theseDateSum + response.data[0]['sum(Volume)'];
+              this.sumData = theseDateSum + sum;
             }
           },
           (err) => {
@@ -693,13 +716,34 @@ export default {
           start: startDay,
           end: actu_end,
         };
-        fetchSumVolume(sumQuery).then(
+        fetchDiCiVolume(sumQuery).then(
           (response) => {
             console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
             if (response.data.length == 0) {
-              this.sumData = theseDateSum;
+              this.diciSumData = theseDateSum;
             } else {
-              this.sumData = theseDateSum + response.data[0]['sum(Volume)'];
+              this.diciSumData = theseDateSum + sum;
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        fetchHKVolume(sumQuery).then(
+          (response) => {
+            console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
+            if (response.data.length == 0) {
+              this.diciSumData = theseDateSum;
+            } else {
+              this.diciSumData = theseDateSum + sum;
             }
           },
           (err) => {
@@ -714,6 +758,7 @@ export default {
           console.log("共显示天数：", i);
           theseDateSum = theseDateSum + cross[i - 1].Volume;
         }
+        let theseDateSumCopy = theseDateSum
         let startDay = new Date("2021-10-20 00:00:00").format("yyyy-MM-dd hh:mm:ss");
         let endDay = new Date("2021-9-30 23:59:59").format("yyyy-MM-dd hh:mm:ss");
         const sumQuery1 = {
@@ -724,33 +769,76 @@ export default {
           start: actu_start,
           end: endDay,
         };
-        fetchSumVolume(sumQuery1).then(
+        fetchDiCiVolume(sumQuery1).then(
           (response) => {
             console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
             if (response.data.length == 0) {
-              // this.sumData = theseDateSum;
+              this.diciSumData = theseDateSum;
             } else {
-              theseDateSum = theseDateSum + response.data[0]['sum(Volume)'];
+              theseDateSum = theseDateSum + sum;
             }
           },
           (err) => {
             console.log(err);
           }
         );
-        fetchSumVolume(sumQuery2).then(
+        fetchDiCiVolume(sumQuery2).then(
           (response) => {
             console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
             if (response.data.length == 0) {
-              // this.sumData = theseDateSum;
+              this.diciSumData = theseDateSum;
             } else {
-              theseDateSum = theseDateSum + response.data[0]['sum(Volume)'];
+              theseDateSum = theseDateSum + sum;
             }
           },
           (err) => {
             console.log(err);
           }
         );
-        this.sumData = theseDateSum
+        this.diciSumData = theseDateSum
+        fetchHKVolume(sumQuery1).then(
+          (response) => {
+            console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
+            if (response.data.length == 0) {
+              this.sumData = theseDateSumCopy;
+            } else {
+              theseDateSumCopy = theseDateSumCopy + sum;
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        fetchHKVolume(sumQuery2).then(
+          (response) => {
+            console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
+            if (response.data.length == 0) {
+              this.sumData = theseDateSumCopy;
+            } else {
+              theseDateSumCopy = theseDateSumCopy + sum;
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        this.sumData = theseDateSumCopy
       }
       //时间段不包含静态数据
       else {
@@ -760,14 +848,30 @@ export default {
           start: actu_start,
           end: actu_end,
         };
-        fetchSumVolume(sumQuery).then(
+        fetchDiCiVolume(sumQuery).then(
           (response) => {
             console.log("地磁数据", response);
-            if (response.data.length == 0) {
-              // this.sumData = theseDateSum;
-            } else {
-              this.sumData = response.data[0]['sum(Volume)'];
-              console.log();
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
+            if (response.data.length>0) {
+              this.diciSumData = sum;
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+        fetchHKVolume(sumQuery).then(
+          (response) => {
+            console.log("地磁数据", response);
+            let sum = 0;
+            response.data.forEach((element) => {
+              sum += element.Volume;
+            });
+            if (response.data.length>0) {
+              this.sumData = sum;
             }
           },
           (err) => {
@@ -777,22 +881,22 @@ export default {
       }
 
 
-      const sumQuery2 = {
-        startTime: this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss"),
-        endTime: this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss"),
-      };
-      //海康总量请求
-      fetchhaikangVolume(sumQuery2).then(
-        (response) => {
-          console.log("海康对比参数：", response.data[0]["count"]);
+      // const sumQuery2 = {
+      //   startTime: this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss"),
+      //   endTime: this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss"),
+      // };
+      // //海康总量请求
+      // fetchhaikangVolume(sumQuery2).then(
+      //   (response) => {
+      //     console.log("海康对比参数：", response.data[0]["count"]);
 
-          this.totalData = { Volume: response.data[0]["count"], AvgSpeed: 0 };
+      //     this.totalData = { Volume: response.data[0]["count"], AvgSpeed: 0 };
 
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      //   },
+      //   (err) => {
+      //     console.log(err);
+      //   }
+      // );
     },
     changeSumData() {
       // const sumQuery = {

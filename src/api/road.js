@@ -80,6 +80,29 @@ export function getDayVolume(query) {
   }
 }
 
+//按照接口获取车道的地磁日数据
+export function fetchDiCiVolume(query) {
+    return request({
+      url: '/countByCrossID',
+      method: 'get',
+      params: query
+    })
+}
+
+//按照接口获取车道的地磁日数据
+export function fetchHKVolume(query) {
+  console.log(process.env.VUE_APP_PROJECT_NAME);
+  let rqUrl = '/countByCrossIDB'
+  if (process.env.VUE_APP_PROJECT_NAME=='五局') {
+    rqUrl = '/countByCrossIDA'
+  }
+  return request({
+    url: rqUrl,
+    method: 'get',
+    params: query
+  })
+}
+
 
 
 

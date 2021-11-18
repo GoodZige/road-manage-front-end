@@ -117,7 +117,7 @@ export const constantRoutes = [
         path: 'carSumMix',
         component: () => import('@/views/car-sum-mix/index'),
         name: 'CarSumMix',
-        meta: { title: '车流量混合统计', icon: 'dashboard', affix: true }
+        meta: { title: '车流量统计', icon: 'dashboard', affix: true }
       }
     ]
   },

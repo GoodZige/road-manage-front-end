@@ -6,7 +6,7 @@
           <svg-icon icon-class="car" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text"> 海康设备车流量统计(辆)
+          <div class="card-panel-text"> 视频设备车流量统计(辆)
           </div>
           <count-to :start-val="0" :end-val="Volume" :duration="2600" class="card-panel-num" />
         </div>
@@ -34,10 +34,8 @@ export default {
       console.log(newValue)
       if (newValue == null) {
         this.Volume = 0
-        this.AvgSpeed = 0
       } else {
-        this.Volume = newValue.Volume
-        this.AvgSpeed = newValue.AvgSpeed
+        this.Volume = newValue
       }
     }
   },
