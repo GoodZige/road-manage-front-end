@@ -9,75 +9,90 @@ export function fetchAnalysis(query) {
   })
 }
 export function fetchCountByHour(query) {
-  let nowDate = new Date()
-  let nowHour = nowDate.getHours()
-  if (nowHour>=22||nowHour<=6) {
     return request({
-      url: '/countByHour',
+      url: '/countByHoursV',
       method: 'get',
       params: query
     })
-  }else{
-    console.log(process.env.VUE_APP_PROJECT_NAME);
-    let rqUrl = '/countByHourB'
-    if (process.env.VUE_APP_PROJECT_NAME=='五局') {
-      rqUrl = '/countByHourA'
-    }
-    return request({
-      url: rqUrl,
-      method: 'get',
-      params: query
-    })
-  }
+  // let nowDate = new Date()
+  // let nowHour = nowDate.getHours()
+  // if (nowHour>=22||nowHour<=6) {
+  //   return request({
+  //     url: '/countByHour',
+  //     method: 'get',
+  //     params: query
+  //   })
+  // }else{
+  //   console.log(process.env.VUE_APP_PROJECT_NAME);
+  //   let rqUrl = '/countByHourB'
+  //   if (process.env.VUE_APP_PROJECT_NAME=='五局') {
+  //     rqUrl = '/countByHourA'
+  //   }
+  //   return request({
+  //     url: rqUrl,
+  //     method: 'get',
+  //     params: query
+  //   })
+  // }
 }
 
 
 // 按照新接口获取车道的月数据
 export function getMonthVolume(query) {
-  let nowDate = new Date()
-  let nowHour = nowDate.getHours()
-  if (nowHour>=22||nowHour<=6) {
-    return request({
-      url: '/countMonthVolume',
-      method: 'get',
-      params: query
-    })
-  }else{
-    console.log(process.env.VUE_APP_PROJECT_NAME);
-    let rqUrl = '/countMonthVolumeB'
-    if (process.env.VUE_APP_PROJECT_NAME=='五局') {
-      rqUrl = '/countMonthVolumeA'
-    }
-    return request({
-      url: rqUrl,
-      method: 'get',
-      params: query
-    })
-  }
+  return request({
+    url: '/monthValueV',
+    method: 'get',
+    params: query
+  })
+  // let nowDate = new Date()
+  // let nowHour = nowDate.getHours()
+  // if (nowHour>=22||nowHour<=6) {
+  //   return request({
+  //     url: '/countMonthVolume',
+  //     method: 'get',
+  //     params: query
+  //   })
+  // }else{
+  //   console.log(process.env.VUE_APP_PROJECT_NAME);
+  //   let rqUrl = '/countMonthVolumeB'
+  //   if (process.env.VUE_APP_PROJECT_NAME=='五局') {
+  //     rqUrl = '/countMonthVolumeA'
+  //   }
+  //   return request({
+  //     url: rqUrl,
+  //     method: 'get',
+  //     params: query
+  //   })
+  // }
   
 }
 //按照接口获取车道的日数据
 export function getDayVolume(query) {
-  let nowDate = new Date()
-  let nowHour = nowDate.getHours()
-  if (nowHour>=22||nowHour<=6) {
-    return request({
-      url: '/countByCrossID',
-      method: 'get',
-      params: query
-    })
-  }else{
-    console.log(process.env.VUE_APP_PROJECT_NAME);
-    let rqUrl = '/countByCrossIDB'
-    if (process.env.VUE_APP_PROJECT_NAME=='五局') {
-      rqUrl = '/countByCrossIDA'
-    }
-    return request({
-      url: rqUrl,
-      method: 'get',
-      params: query
-    })
-  }
+  return request({
+    url: '/countByCrossIDV',
+    method: 'get',
+    params: query
+  })
+  // let nowDate = new Date()
+  // let nowHour = nowDate.getHours()
+  // if (nowHour>=22||nowHour<=6) {
+  //   return request({
+  //     url: '/countByCrossID',
+  //     method: 'get',
+  //     params: query
+  //   })
+  // }else{
+  //   console.log(process.env.VUE_APP_PROJECT_NAME);
+  //   let rqUrl = '/countByCrossIDB'
+  //   if (process.env.VUE_APP_PROJECT_NAME=='五局') {
+  //     rqUrl = '/countByCrossIDA'
+  //   }
+  //   return request({
+  //     url: rqUrl,
+  //     method: 'get',
+  //     params: query
+  //   })
+  // }
 }
 
 //按照接口获取车道的地磁日数据
