@@ -210,17 +210,17 @@ export default {
               },
               data: (()=>{
                 let sumData = []
-                if (year==2021 && month==10) {
-                  for(let i=0;i<18;i++){
-                    sumData.push(0)
-                  }
-                  let addData = this.chartData.map(x => { return x[crossName] })
-                  addData.forEach(element => {
-                    sumData.push(element)
-                  });
-                }else{
-                  sumData = this.chartData.map(x => { return x[crossName] })
-                }
+                // if (year==2021 && month==10) {
+                //   for(let i=0;i<18;i++){
+                //     sumData.push(0)
+                //   }
+                //   let addData = this.chartData.map(x => { return x[crossName] })
+                //   addData.forEach(element => {
+                //     sumData.push(element)
+                //   });
+                // }else{
+                sumData = this.chartData.map(x => { return x[crossName] })
+                // }
                 return sumData
               })()
             }

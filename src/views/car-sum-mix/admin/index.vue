@@ -171,7 +171,11 @@
               {{ scope.row.date }}
             </template>
           </el-table-column>
-          <el-table-column :label="name" v-for="name in crossNameList" :key="name">
+          <el-table-column
+            :label="name"
+            v-for="name in crossNameList"
+            :key="name"
+          >
             <template slot-scope="scope" class="msg">
               {{ scope.row[name] }}
             </template>
@@ -405,7 +409,7 @@ export default {
       month: this.dates.month.format("yyyy-MM"),
     };
     // 月统计
-    this.changeMonthData()
+    this.changeMonthData();
 
     // http://localhost:8100/message/countByHour?date=2021-10-08
     const queryLineChart = {
@@ -458,14 +462,14 @@ export default {
         //const filterVal = ['CrossName', 'AvgSpeed', 'Volume', 'Volume1', 'Volume2', 'Volume3', 'Volume4', 'Volume5']
         //
         let tHeader = [];
-        tHeader.push("日期")
-        this.crossNameList.forEach(element => {
-          tHeader.push(element)
+        tHeader.push("日期");
+        this.crossNameList.forEach((element) => {
+          tHeader.push(element);
         });
         let filterVal = [];
-        filterVal.push("date")
-        this.crossNameList.forEach(element => {
-          filterVal.push(element)
+        filterVal.push("date");
+        this.crossNameList.forEach((element) => {
+          filterVal.push(element);
         });
 
         const list = this.allList.list;
@@ -500,8 +504,8 @@ export default {
 
     initSumData() {
       let CrossID = this.roadValue;
-      if (CrossID=="null") {
-        CrossID = null
+      if (CrossID == "null") {
+        CrossID = null;
       }
       let actu_start = this.dates.sumDate[0].format("yyyy-MM-dd hh:mm:ss");
       let actu_end = this.dates.sumDate[1].format("yyyy-MM-dd hh:mm:ss");
@@ -680,7 +684,7 @@ export default {
             response.data.forEach((element) => {
               sum += element.Volume;
             });
-            if (response.data.length>0) {
+            if (response.data.length > 0) {
               this.sumData = sum;
             }
           },
@@ -689,6 +693,7 @@ export default {
           }
         );
       }
+      console.log("sumQuery22");
     },
     changeSumData(query) {
       this.initSumData(query);
@@ -720,7 +725,7 @@ export default {
       }
     },
     changeMonthData() {
-      this.allList.listLoading = true
+      this.allList.listLoading = true;
       let month = this.dates.month.format("yyyy-MM");
       const query = {
         time: month,
@@ -728,64 +733,65 @@ export default {
 
       getMonthVolume(query).then((response) => {
         console.log("monthData：", response.data);
-        let originData = {}
-        response.data.forEach(element => {
-          originData[Object.keys(element)[0]] = element[Object.keys(element)[0]]
+        let originData = {};
+        response.data.forEach((element) => {
+          originData[Object.keys(element)[0]] =
+            element[Object.keys(element)[0]];
         });
         // let originData = response.data[0];
         let excelData = [];
         let crossNameList = [];
         // let dateList = Object.keys(originData);
         let dateList = [];
-        for(let key in originData){
-          key.split('-')
-          dateList.push(key)
+        for (let key in originData) {
+          key.split("-");
+          dateList.push(key);
         }
-        dateList.sort(function(a,b){
-          let intA = parseInt(a.split('-').slice(-1))
-          let intB = parseInt(b.split('-').slice(-1))
-          return intA - intB
-        })
+        dateList.sort(function (a, b) {
+          let intA = parseInt(a.split("-").slice(-1));
+          let intB = parseInt(b.split("-").slice(-1));
+          return intA - intB;
+        });
         console.log(dateList);
         for (let i = 0; i < dateList.length; i++) {
           let key = dateList[i];
           let sData = {};
           sData["date"] = key;
-          excelData.push(sData)
+          excelData.push(sData);
         }
         for (let i = 0; i < dateList.length; i++) {
           let key = dateList[i];
           let volumeList = originData[key];
           // console.log(volumeList);
-          let excelId = excelData.findIndex(function(item){
-            return item.date == key; 
-          })
+          let excelId = excelData.findIndex(function (item) {
+            return item.date == key;
+          });
           volumeList.forEach((element) => {
-            crossNameList.push(element.CrossName)
-            excelData[excelId][element.CrossName] = element.Volume
+            crossNameList.push(element.CrossName);
+            excelData[excelId][element.CrossName] = element.Volume;
           });
         }
 
-        function unique1(arr){
-          var hash=[];
+        function unique1(arr) {
+          var hash = [];
           for (var i = 0; i < arr.length; i++) {
-            if(hash.indexOf(arr[i])==-1){
+            if (hash.indexOf(arr[i]) == -1) {
               hash.push(arr[i]);
             }
           }
           return hash;
         }
-        this.crossNameList = unique1(crossNameList)
+        this.crossNameList = unique1(crossNameList);
         console.log(this.crossNameList);
         console.log("excelData:", excelData);
-        this.allList.list = excelData
-        this.allList.listLoading = false
+        this.allList.list = excelData;
+        this.allList.listLoading = false;
         this.monthData = {
           data: excelData,
           crossNameList: this.crossNameList,
           year: this.dates.month.getFullYear(),
-          month: this.dates.month.getMonth()+1
-        }
+          month: this.dates.month.getMonth() + 1,
+        };
         // originData.forEach(element => {
         //   for (const key in element) {
         //     let keys = Object.keys(obj)
