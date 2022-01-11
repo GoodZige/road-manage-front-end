@@ -781,7 +781,13 @@ export default {
           }
           return hash;
         }
-        this.crossNameList = unique1(crossNameList);
+        crossNameList = unique1(crossNameList)
+        crossNameList.sort(function(a,b){
+          a = parseInt(a.split('+')[1])
+          b = parseInt(b.split('+')[1])
+          return a - b
+        })
+        this.crossNameList = crossNameList
         console.log(this.crossNameList);
         console.log("excelData:", excelData);
         this.allList.list = excelData;

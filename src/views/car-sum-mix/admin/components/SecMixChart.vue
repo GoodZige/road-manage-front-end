@@ -46,16 +46,9 @@ export default {
       // }())
       let xData = null
       console.log(year,month);
-      if (year==2021 && month==10) {
-        xData = [
-          '2021-10-01','2021-10-02','2021-10-03','2021-10-04','2021-10-05','2021-10-06','2021-10-07','2021-10-08','2021-10-09','2021-10-10',
-          '2021-10-11','2021-10-12','2021-10-13','2021-10-14','2021-10-15','2021-10-16','2021-10-17','2021-10-18','2021-10-19','2021-10-20',
-          '2021-10-21','2021-10-22','2021-10-23','2021-10-24','2021-10-25','2021-10-26','2021-10-27','2021-10-28','2021-10-29','2021-10-30',
-          '2021-10-31',
-        ]
-      }else{
-        xData = this.chartData.map(x => { return x.date })
-      }
+      
+      xData = this.chartData.map(x => { return x.date })
+      
       let crossNameList = newValue.crossNameList
       let legendData = []
       legendData.push("各车道总量")
@@ -247,33 +240,42 @@ export default {
               }
             },
             data: (()=>{
-              if (year==2021 && month==10) {
-                let staticSum =[45555,33027,84474,29211,27867,36174,28527,26235,66493,
-                58055,68978,59972,52647,79668,58895,64563,56256,87654]
-                let addSum = this.chartData.map(x => {
-                  let sum = 0
-                  crossNameList.forEach(element => {
-                    if (element in x) {
-                      sum += x[element]
-                    }
-                  });
-                  return sum
-                })
-                addSum.forEach(element => {
-                  staticSum.push(element)
+              return this.chartData.map(x => {
+                let sum = 0
+                crossNameList.forEach(element => {
+                  if (element in x) {
+                    sum += x[element]
+                  }
                 });
-                return staticSum
-              }else{
-                return this.chartData.map(x => {
-                  let sum = 0
-                  crossNameList.forEach(element => {
-                    if (element in x) {
-                      sum += x[element]
-                    }
-                  });
-                  return sum
-                })
-              }
+                return sum
+              })
+              // if (year==2021 && month==10) {
+              //   let staticSum =[45555,33027,84474,29211,27867,36174,28527,26235,66493,
+              //   58055,68978,59972,52647,79668,58895,64563,56256,87654]
+              //   let addSum = this.chartData.map(x => {
+              //     let sum = 0
+              //     crossNameList.forEach(element => {
+              //       if (element in x) {
+              //         sum += x[element]
+              //       }
+              //     });
+              //     return sum
+              //   })
+              //   addSum.forEach(element => {
+              //     staticSum.push(element)
+              //   });
+              //   return staticSum
+              // }else{
+              //   return this.chartData.map(x => {
+              //     let sum = 0
+              //     crossNameList.forEach(element => {
+              //       if (element in x) {
+              //         sum += x[element]
+              //       }
+              //     });
+              //     return sum
+              //   })
+              // }
             })(),
           }
           seriesList.push(sumSeries)

@@ -37,53 +37,53 @@ module.exports = {
       errors: false
     },
     before: require('./mock/mock-server.js'),
-    proxy: {
-      // change xxx-api/login => mock/login
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
-      // '/message/timeTotle': {
-      //   target: `http://192.168.137.73:8111`, // 修改后台接口地址8099
-      //   changeOrigin: true
-      // },
-      // '/message/timeData': {
-      //   target: `http://192.168.137.73:8111`, // 修改后台接口地址8099
-      //   changeOrigin: true
-      // },
-      // '/message': {
-      //   target: `http://192.168.137.73:8099`, // 修改后台接口地址8099
-      //   changeOrigin: true
-      // },
-      '/message/countByHourB': {
-        target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
-        changeOrigin: true
-      },
-      '/message/countMonthVolumeB': {
-        target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
-        changeOrigin: true
-      },
-      '/message/countByCrossIDB': {
-        target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
-        changeOrigin: true
-      },
-      '/message/timeTotle': {
-        target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
-        changeOrigin: true
-      },
-      '/message/timeData': {
-        target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
-        changeOrigin: true
-      },
-      '/message': {
-        target: `http://172.27.169.214:8099`, // 修改后台接口地址8099
-        changeOrigin: true
-      },
-      // [process.env.VUE_APP_BASE_API]: {s
-      //   target: `http://1.15.118.26:8023`, // 修改后台接口地址
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     ['^' + process.env.VUE_APP_BASE_API]: ''
-      //   }
-      // }
-    }
+    // proxy: {
+    //   // change xxx-api/login => mock/login
+    //   // detail: https://cli.vuejs.org/config/#devserver-proxy
+    //   // '/message/timeTotle': {
+    //   //   target: `http://192.168.137.73:8111`, // 修改后台接口地址8099
+    //   //   changeOrigin: true
+    //   // },
+    //   // '/message/timeData': {
+    //   //   target: `http://192.168.137.73:8111`, // 修改后台接口地址8099
+    //   //   changeOrigin: true
+    //   // },
+    //   // '/message': {
+    //   //   target: `http://192.168.137.73:8099`, // 修改后台接口地址8099
+    //   //   changeOrigin: true
+    //   // },
+    //   '/message/countByHourB': {
+    //     target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
+    //     changeOrigin: true
+    //   },
+    //   '/message/countMonthVolumeB': {
+    //     target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
+    //     changeOrigin: true
+    //   },
+    //   '/message/countByCrossIDB': {
+    //     target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
+    //     changeOrigin: true
+    //   },
+    //   '/message/timeTotle': {
+    //     target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
+    //     changeOrigin: true
+    //   },
+    //   '/message/timeData': {
+    //     target: `http://192.168.43.30:8111`, // 修改后台接口地址8099
+    //     changeOrigin: true
+    //   },
+    //   '/message': {
+    //     target: `http://172.27.169.214:8099`, // 修改后台接口地址8099
+    //     changeOrigin: true
+    //   },
+    //   // [process.env.VUE_APP_BASE_API]: {s
+    //   //   target: `http://1.15.118.26:8023`, // 修改后台接口地址
+    //   //   changeOrigin: true,
+    //   //   pathRewrite: {
+    //   //     ['^' + process.env.VUE_APP_BASE_API]: ''
+    //   //   }
+    //   // }
+    // }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
