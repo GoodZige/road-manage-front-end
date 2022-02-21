@@ -147,6 +147,19 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/repair',
+    component: Layout,
+    redirect: '/repair',
+    children: [
+      {
+        path: 'repair',
+        component: () => import('@/views/repair/index'),
+        name: 'Repair',
+        meta: { title: '数据上传', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
   // {
   //   path: '/manage',
   //   component: Layout,

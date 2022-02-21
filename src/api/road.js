@@ -178,3 +178,12 @@ export function fetchAlarm(query) {
     params: query
   })
 }
+
+//缺失数据上传
+export function uploadMissingData(query) {
+  return request({
+    url: '/manualAddData',
+    method: 'get',
+    params: query
+  })
+}
